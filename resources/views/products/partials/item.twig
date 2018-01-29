@@ -1,0 +1,10 @@
+<div class="card border-info">
+    <a href="{{ path_for('product.get', {url: product.url}) }}">
+        <img class="card-img-top img-fluid" src="{{ product.photo }}" alt="Card image cap">
+    </a>
+    <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.content[:100] | striptags }}...</p>
+        <a href="{{ path_for('product.get', {url: product.url}) }}" class="btn btn-primary float-right">View More</a>
+    </div>
+</div>

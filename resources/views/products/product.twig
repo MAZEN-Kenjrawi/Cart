@@ -1,0 +1,28 @@
+{% extends 'templates/app.twig' %}
+
+{% block meta %}
+    <title>{{ product.name }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-md-4 col-sm-6 mt-5">
+            <img src="{{ product.photo }}" alt="{{ product.name }}" class="img-fluid img-thumbnail mx-auto" />
+        </div>
+        <div class="col-md-8 col-sm-6">
+            <h1>{{ product.name }}</h1>
+            <span class="price">
+                Price: <small>${{ (product.sale_price > 0)? product.sale_price : product.price }}</small>,
+                QTY: <small>{{ product.qty }}</small>
+            </span>
+            <hr/>
+
+            {{ product.content | raw }}
+
+            <a href="{{ path_for('cart.add', {url: product.url, qty: 1}) }}" class="btn btn-info">
+                Add to Cart
+            </a>
+            
+        </div>
+    </div>
+{% endblock %}

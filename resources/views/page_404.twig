@@ -1,0 +1,22 @@
+{% extends 'templates/app.twig' %}
+
+{% block meta %}
+    <meta name="description" content="" />
+{% endblock %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-12 text-center mt-5">
+            <h1>PAGE NOT FOUND</h1>
+            <h2 class="display-1">404 :'(</h2>
+            <p class="mt-5 mb-5">
+                The page you are looking for is no longer exist.<br/>
+                Perhaps you can go back to the site's and see if you can find what you are looking for.
+            </p>
+            <a href="{{ path_for('homepage') }}" class="btn btn-info rounded-0">
+                Back to Homepage
+            </a>        
+        </div>
+
+    </div>
+{% endblock %}

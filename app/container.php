@@ -11,6 +11,8 @@ use Cart\Support\Storage\Contracts\StorageInterface;
 
 use Cart\Basket\Basket;
 
+use Cart\Support\Extensions\AppTwigExtensions;
+
 return [
 
     StorageInterface::class => function(ContainerInterface $c)
@@ -28,6 +30,7 @@ return [
             $c->get('router'),
             $c->get('request')->getUri()
         ));
+        $twig->addExtension(new AppTwigExtensions);
 
         $twig->getEnvironment()->addGlobal('basket', $c->get(Basket::class));
 

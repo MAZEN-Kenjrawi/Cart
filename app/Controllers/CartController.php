@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 use Cart\Basket\Basket;
 
+use Cart\Basket\Exceptions\QtyExceededException;
+
 class CartController extends FrontendController
 {
     protected $basket;
@@ -31,7 +33,7 @@ class CartController extends FrontendController
     {
         $product = $this->product->where('url', $url)->first();
 
-        // @TODO: make it ajax response
+         // @TODO: make it ajax response
         if(!$product)
         {
             // return Error
@@ -41,7 +43,7 @@ class CartController extends FrontendController
         try {
             $this->basket->add($product, $qty);
         } catch (QtyExceededException $error) {
-            
+            /* @Todo: add a flash message {{ $error->message }} :p */
         }
 
         return $response->withRedirect($router->pathFor('cart.index'));

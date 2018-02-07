@@ -28,11 +28,12 @@ class Product extends Model
 
     public function getPrice()
     {
+        $realPrice = $this->price;
         if(($this->sale_price != 0) && ($this->price > $this->sale_price))
         {
-            return $this->sale_price;
+            $realPrice = $this->sale_price;
         }
-        return $this->price;
+        return number_format($realPrice, 2);
     }
 
     public function getPriceWithCurrency()

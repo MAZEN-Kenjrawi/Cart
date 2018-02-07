@@ -12,16 +12,22 @@
         <div class="col-md-8 col-sm-6">
             <h1>{{ product.name }}</h1>
             <span class="price">
-                Price: <small>${{ (product.sale_price > 0)? product.sale_price : product.price }}</small>,
-                QTY: <small>{{ product.qty }}</small>
+                Price: <small>{{ product.getPriceWithCurrency() }}</small>
+                {% if product.outOfStock() %}
+                    <span class="badge badge-danger">Out of Stock</span>
+                {% elseif product.hasLowStock() %}
+                    <span class="badge badge-warning">Low Stock</span>                
+                {% endif %}                
             </span>
             <hr/>
 
             {{ product.content | raw }}
 
-            <a href="{{ path_for('cart.add', {url: product.url, qty: 1}) }}" class="btn btn-info">
-                Add to Cart
-            </a>
+            {% if product.outOfStock() != true %}
+                <a href="{{ path_for('cart.add', {url: product.url, qty: 1}) }}" class="btn btn-info">
+                    Add to Cart
+                </a>
+            {% endif %}
             
         </div>
     </div>

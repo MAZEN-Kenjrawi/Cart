@@ -42,7 +42,6 @@ Class Basket
         if(!$this->product->find($product->id)->hasStock($qty))
         {
             throw new QtyExceededException;
-
         }
 
         if($qty === 0)
@@ -73,15 +72,16 @@ Class Basket
 
     public function all()
     {
-        $returnedItems = [];
         $allItems = $this->storage->all();
-        $products = $this->product->find(array_keys($allItems));
-        foreach($products as $product)
-        {
-            $product->qty = $allItems[$product->id]['qty'];
-            $returnedItems[] = $product;
-        }
-        return $this->storage->all();
+        $products = $this->product->find(array_keys($allItems))->keyBy('id');
+
+        return array_map(function($item) use($products) {
+            if($products[$item['product_id']]->hasStock($item['qty'])){
+                $item['qty'] = $products[$item['product_id']]['stock'];
+                $this->update($products[$item['product_id']], $item['qty']);
+                return $item;
+            }
+        }, $allItems);
     }
 
     public function clear()
@@ -99,12 +99,10 @@ Class Basket
         $total = 0;
         if($this->itemCount())
         {
-            $allItems = $this->all();            
+            $allItems = $this->all();
             $total = array_sum(
-                array_map(function($item){
-                    if($this->product->find($item['product_id'])->hasStock($item['qty'])){
-                        return (float) ($item['qty'] * $item['item_price']);                        
-                    }
+                array_map(function($item) {
+                    return (float) ($item['qty'] * $item['item_price']);                        
                 }, $allItems)
             );
         }

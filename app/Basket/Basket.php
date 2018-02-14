@@ -56,6 +56,7 @@ Class Basket
             'item_price'    => (float) (($product->sale_price > 0)? $product->sale_price : $product->price),
             'product_name'  => $product->name,
             'product_url'   => $product->url,
+            'product_stock'   => $product->stock,
             'product'       => json_encode($product),
         ]);
     }
@@ -76,11 +77,11 @@ Class Basket
         $products = $this->product->find(array_keys($allItems))->keyBy('id');
 
         return array_map(function($item) use($products) {
-            if($products[$item['product_id']]->hasStock($item['qty'])){
+            if(!$products[$item['product_id']]->hasStock($item['qty'])){
                 $item['qty'] = $products[$item['product_id']]['stock'];
                 $this->update($products[$item['product_id']], $item['qty']);
-                return $item;
             }
+            return $item;
         }, $allItems);
     }
 

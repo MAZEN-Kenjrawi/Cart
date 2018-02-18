@@ -1,4 +1,5 @@
 <?php
+
 namespace Cart\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -29,20 +30,19 @@ class Product extends Model
     public function getPrice()
     {
         $realPrice = $this->price;
-        if(($this->sale_price != 0) && ($this->price > $this->sale_price))
-        {
+        if (($this->sale_price != 0) && ($this->price > $this->sale_price)) {
             $realPrice = $this->sale_price;
         }
+
         return number_format($realPrice, 2);
     }
 
     public function getPriceWithCurrency()
     {
-        if(self::CURRENCY_TO_LEFT)
-        {
-            return self::DEFAULT_CURRENCY.' '. $this->getPrice(); 
+        if (self::CURRENCY_TO_LEFT) {
+            return self::DEFAULT_CURRENCY.' '.$this->getPrice();
         } else {
-        return $this->getPrice() .' '. self::DEFAULT_CURRENCY;             
+            return $this->getPrice().' '.self::DEFAULT_CURRENCY;
         }
     }
 }

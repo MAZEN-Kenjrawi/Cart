@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace Cart\Support\Extensions;
 
 use Twig\Extension\AbstractExtension;
@@ -8,10 +9,10 @@ class AppTwigExtensions extends AbstractExtension
 {
     public function getFilters()
     {
-        return array(
-            new TwigFilter('unquoted', array($this, 'unquoted')),
-            new TwigFilter('unserialize', array($this, 'unserialize')),
-        );
+        return [
+            new TwigFilter('unquoted', [$this, 'unquoted']),
+            new TwigFilter('unserialize', [$this, 'unserialize']),
+        ];
     }
 
     public function unquoted($string)

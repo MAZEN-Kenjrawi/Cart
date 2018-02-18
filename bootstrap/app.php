@@ -1,11 +1,12 @@
 <?php
+
 use Cart\App;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-$app = new App;
-$capsule = new Capsule;
+$app = new App();
+$capsule = new Capsule();
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
@@ -14,10 +15,10 @@ $capsule->addConnection([
     'password'  => '',
     'charset'   => 'utf8',
     'collection'=> 'utf8_unicode_ci',
-    'prefix' => ''
+    'prefix'    => '',
 ]);
 
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-require_once __DIR__ . '/../app/routes.php';
+require_once __DIR__.'/../app/routes.php';

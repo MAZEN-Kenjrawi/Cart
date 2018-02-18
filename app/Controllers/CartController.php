@@ -2,15 +2,13 @@
 
 namespace Cart\Controllers;
 
+use Cart\Basket\Basket;
+use Cart\Basket\Exceptions\QtyExceededException;
+use Cart\Models\Product;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Router;
 use Slim\Views\Twig;
-use Cart\Models\Product;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-
-use Cart\Basket\Basket;
-
-use Cart\Basket\Exceptions\QtyExceededException;
 
 class CartController extends FrontendController
 {
@@ -21,7 +19,6 @@ class CartController extends FrontendController
     {
         $this->basket = $basket;
         $this->product = $product;
-
     }
 
     public function index(Request $request, Response $response, Twig $view, Product $product)
@@ -33,9 +30,8 @@ class CartController extends FrontendController
     {
         $product = $this->product->where('url', $url)->first();
 
-         // @TODO: make it ajax response
-        if(!$product)
-        {
+        // @TODO: make it ajax response
+        if (!$product) {
             // return Error
             return $response->withRedirect($router->pathFor('homepage'));
         }

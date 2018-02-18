@@ -1,8 +1,9 @@
 <?php
+
 namespace Cart;
 
-use DI\ContainerBuilder;
 use DI\Bridge\Slim\App as DiBridge;
+use DI\ContainerBuilder;
 
 class App extends DIBridge
 {
@@ -13,7 +14,5 @@ class App extends DIBridge
         ]);
 
         $builder->addDefinitions(__DIR__.'/container.php');
-
     }
-    
 }

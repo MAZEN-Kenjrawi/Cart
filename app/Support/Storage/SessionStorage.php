@@ -8,10 +8,10 @@ use Countable;
 class SessionStorage implements StorageInterface, Countable
 {
     protected $bucket;
+
     public function __construct($bucket = 'cart')
     {
-        if(!isset($_SESSION[$bucket]))
-        {
+        if (!isset($_SESSION[$bucket])) {
             $_SESSION[$bucket] = [];
         }
 
@@ -20,11 +20,10 @@ class SessionStorage implements StorageInterface, Countable
 
     public function get($index)
     {
-        if(!$this->exists($index))
-        {
-            return null;
+        if (!$this->exists($index)) {
+            return;
         }
-        
+
         return $_SESSION[$this->bucket][$index];
     }
 
@@ -45,8 +44,7 @@ class SessionStorage implements StorageInterface, Countable
 
     public function unset($index)
     {
-        if($this->exists($index))
-        {
+        if ($this->exists($index)) {
             unset($_SESSION[$this->bucket][$index]);
         }
     }

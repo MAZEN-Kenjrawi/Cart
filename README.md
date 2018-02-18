@@ -11,4 +11,12 @@
 
  In addition for Bootstrap 4.0, Jquery 3.2.1 as a front-end frameworks.
  
+
+#### @TODO [Backend]
+<ul>
+<li>Reports & statistics dashboard.</li>
+<li>Interface for CRUD functionality for Products/Pages...</li>
+<li>Tiny Billing Management System, for managing online and direct sales orders.</li>
+</ul>
+
  ### [-- Incomming Updates --]

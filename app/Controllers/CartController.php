@@ -45,30 +45,25 @@ class CartController extends FrontendController
 
         return $response->withRedirect($router->pathFor('cart.index'));
     }
-<<<<<<< HEAD
 
     public function update(Request $request, Response $response, Router $router)
     {
-        if($request->isXhr())
-        {
+        if ($request->isXhr()) {
             $ajaxData = $request->getParsedBody();
             $product = $this->product->find($ajaxData['item_id'])->first();
-            if(!$product)
-            {
+            if (!$product) {
                 return $response->withJson(['status' => 'error']);
             }
-            try{
+
+            try {
                 $this->basket->update($product, (int) $ajaxData['qty']);
+
                 return $response->withJson(['status' => 'success']);
-            } catch(QtyExceededException $error)
-            {
+            } catch (QtyExceededException $error) {
                 return $response->withJson(['status' => 'error']);
             }
-            
         }
+
         return $response->withJson(['status' => 'error']);
     }
 }
-=======
-}
->>>>>>> d3af033c353ca7b36320ceeec45aeaad424f61d7

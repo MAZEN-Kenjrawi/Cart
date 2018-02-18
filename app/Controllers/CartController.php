@@ -26,6 +26,7 @@ class CartController extends FrontendController
 
     public function index(Request $request, Response $response, Twig $view, Product $product)
     {
+        // $this->basket->clear();die;
         return $view->render($response, 'cart/index.twig');
     }
 
@@ -41,11 +42,33 @@ class CartController extends FrontendController
         }
 
         try {
-            $this->basket->add($product, $qty);
+            $this->basket->add($product, (int) $qty);
         } catch (QtyExceededException $error) {
             /* @Todo: add a flash message {{ $error->message }} :p */
         }
 
         return $response->withRedirect($router->pathFor('cart.index'));
+    }
+
+    public function update(Request $request, Response $response, Router $router)
+    {
+        if($request->isXhr())
+        {
+            $ajaxData = $request->getParsedBody();
+            $product = $this->product->find($ajaxData['item_id'])->first();
+            if(!$product)
+            {
+                return $response->withJson(['status' => 'error']);
+            }
+            try{
+                $this->basket->update($product, (int) $ajaxData['qty']);
+                return $response->withJson(['status' => 'success']);
+            } catch(QtyExceededException $error)
+            {
+                return $response->withJson(['status' => 'error']);
+            }
+            
+        }
+        return $response->withJson(['status' => 'error']);
     }
 }

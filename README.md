@@ -1,4 +1,4 @@
-# Cart
+# Cart [![StyleCI](https://styleci.io/repos/118575778/shield?branch=master)](https://styleci.io/repos/118575778)
 ## It's a trying to make a full customize website for E-Commerce needs.
 
 ### Technology & Frameworks:

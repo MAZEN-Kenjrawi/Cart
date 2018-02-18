@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                         {% for item in basket.all %}
-                            <tr>
+                            <tr data-id="{{ item.product_id }}">
                                 <th scope="row">{{ loop.index }}</th>
                                 <td>
                                     <a href="{{ path_for('product.get', {url : (item.product_url)}) }}">
@@ -26,7 +26,11 @@
                                     </a>
                                 </td>
                                 <td>{{ item.item_price | number_format(2) }}</td>
-                                <td>{{ item.qty }}</td>
+                                <td class="form-inline">                                    
+                                    <button class="addQty btn btn-default btn-sm rounded-0 pl-2 pr-2" type="button">+</button>
+                                    <input max="{{ item.product_stock }}" type="number" value="{{ item.qty }}" class="w-25 form-control form-control-sm rounded-0 qty_value" />
+                                    <button class="subQty btn btn-default btn-sm rounded-0 pl-2 pr-2" type="button"> - </button> 
+                                </td>
                                 <td>{{ (item.qty * item.item_price) | number_format(2) }}</td>
                             </tr>
                         {% endfor %}
@@ -37,26 +41,12 @@
             {% endif %}
         </div>
         <div class="col-4">
-            {% if basket.itemCount and basket.subTotal %}
-                <h2 class="mt-1">Order Summary</h2>
-                <table class="table">
-                    <tr>
-                        <td><strong>Subtotal</strong></td>
-                        <td>${{ basket.subTotal | number_format(2) }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Shipping</strong></td>
-                        <td>${{ basket.shippingFees | number_format(2) }}</td>
-                    </tr>
-                    <tr class="bg-light">
-                        <td><strong>Total</strong></td>
-                        <td>${{ basket.total | number_format(2) }}</td>
-                    </tr>
-                </table>
-                 
-                <a href="javascript:void(0)" class="btn btn-info">Checkout</a>
-            {% endif %}
+            {% include 'cart/partials/summary.twig' %}
         </div>
     </div>
 
+{% endblock %}
+
+{% block js_scripts %}
+<script src="{{ path_for('homepage') }}../resources/assets/js/cart.js"></script>
 {% endblock %}
